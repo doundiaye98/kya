@@ -1,0 +1,16 @@
+{
+  "name": "KYA CARS",
+  "short_name": "KYA CARS",
+  "description": "Location et vente de voitures à Dakar",
+  "start_url": "./index.php",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "icons": [
+    {
+      "src": "img/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    }
+  ]
+}
