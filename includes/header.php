@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/auth.php';
 $current = $current ?? 'accueil';
 $pageTitle = $pageTitle ?? 'KYA CARS — Location & vente de voitures à Dakar';
 $pageDesc = $pageDesc ?? 'KYA CARS, location et vente de véhicules premium à Dakar. Flotte luxe et utilitaire, service 24/7, tarifs compétitifs.';
@@ -21,7 +22,7 @@ $pageDesc = $pageDesc ?? 'KYA CARS, location et vente de véhicules premium à D
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body>
 <div id="preloader">
@@ -53,11 +54,23 @@ $pageDesc = $pageDesc ?? 'KYA CARS, location et vente de véhicules premium à D
       <a href="flotte.php" class="<?= $current === 'flotte' ? 'active' : '' ?>">Flotte</a>
       <a href="vendre.php" class="<?= $current === 'vendre' ? 'active' : '' ?>">Vendre</a>
       <a href="contact.php" class="<?= $current === 'contact' ? 'active' : '' ?>">Contact</a>
-      <a class="btn btn-gold nav-cta-mobile" href="flotte.php">Réserver</a>
+      <?php if (has_role('admin')): ?>
+        <a href="admin/index.php" class="<?= $current === 'login' ? 'active' : '' ?>">Admin</a>
+      <?php elseif (is_logged_in()): ?>
+        <a href="espace-client/index.php" class="<?= $current === 'login' ? 'active' : '' ?>">Mon espace</a>
+      <?php else: ?>
+        <a href="login.php" class="<?= $current === 'login' ? 'active' : '' ?>">Connexion</a>
+      <?php endif; ?>
+      <a class="btn btn-gold nav-cta-mobile" href="<?= is_logged_in() ? (has_role('admin') ? 'admin/index.php' : 'espace-client/index.php') : 'flotte.php' ?>">
+        <?= is_logged_in() ? 'Mon espace' : 'Réserver' ?>
+      </a>
     </nav>
-    <a class="btn btn-gold nav-cta" href="flotte.php">Réserver</a>
+    <a class="btn btn-gold nav-cta" href="<?= is_logged_in() ? (has_role('admin') ? 'admin/index.php' : 'espace-client/index.php') : 'login.php' ?>">
+      <?= is_logged_in() ? 'Mon espace' : 'Connexion' ?>
+    </a>
     <button class="nav-toggle" type="button" aria-label="Ouvrir le menu">
       <i></i><i></i><i></i>
     </button>
   </div>
 </header>
+<?php kya_session_close(); ?>

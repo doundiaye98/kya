@@ -3,6 +3,52 @@ function formatCfa(value) {
   return new Intl.NumberFormat("fr-FR").format(value) + " FCFA";
 }
 
+function waBaseUrl() {
+  if (window.KYA && window.KYA.whatsapp) {
+    return "https://wa.me/" + window.KYA.whatsapp;
+  }
+  const fab = document.querySelector(".wa-fab");
+  if (fab && fab.getAttribute("href")) {
+    return fab.getAttribute("href").split("?")[0];
+  }
+  return "https://wa.me/221773101744";
+}
+
+function carWhatsAppMessage(car, preferMode) {
+  const isSale = preferMode === "vente" || (!car.mode.includes("location") && car.mode.includes("vente"));
+  const offre = isSale ? "Achat (vente)" : "Location";
+  const tarif = isSale
+    ? (car.priceSale ? formatCfa(car.priceSale) + " à l'achat" : "prix sur demande")
+    : (car.priceDay ? formatCfa(car.priceDay) + " / jour" : "tarif sur demande");
+  const dispo = isSale && car.mode.includes("vente")
+    ? "Je souhaite connaître les modalités d'achat (essai, dossier, reprise éventuelle)."
+    : "Je souhaite confirmer la disponibilité, les conditions (assurance, caution) et une éventuelle livraison à Dakar.";
+  return [
+    "Bonjour KYA CARS 👋",
+    "",
+    "Je vous contacte depuis votre site internet. Je suis intéressé(e) par le véhicule suivant :",
+    "",
+    "• Véhicule : " + car.name,
+    "• Marque : " + car.brand,
+    "• Catégorie : " + car.type,
+    "• Année : " + (car.year || "—"),
+    "• Places : " + car.seats,
+    "• Boîte : " + car.transmission,
+    "• Carburant : " + car.fuel,
+    "• Offre souhaitée : " + offre,
+    "• Tarif indiqué : " + tarif,
+    "",
+    dispo,
+    "",
+    "Merci de me répondre dès que possible.",
+    "Cordialement."
+  ].join("\n");
+}
+
+function carWhatsAppUrl(car, preferMode) {
+  return waBaseUrl() + "?text=" + encodeURIComponent(carWhatsAppMessage(car, preferMode));
+}
+
 function qs(name) {
   return new URLSearchParams(window.location.search).get(name);
 }
@@ -16,13 +62,14 @@ function createCard(car, preferMode) {
   const price = isSale ? car.priceSale : car.priceDay;
   const unit = isSale ? "à l'achat" : "/ jour";
   const badge = isSale ? "Vente" : "Location";
+  const waUrl = carWhatsAppUrl(car, preferMode);
   const article = document.createElement("article");
   article.className = "car-card";
   article.innerHTML = `
-    <div class="thumb">
+    <a class="thumb" href="${waUrl}" target="_blank" rel="noopener" aria-label="Contacter KYA CARS sur WhatsApp pour ${car.name}">
       <img src="${car.image}" alt="${car.name}" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1485291571150-772bcfc10da5?auto=format&fit=crop&w=1400&q=80'">
       <span class="badge ${isSale ? "sale" : ""}">${badge}</span>
-    </div>
+    </a>
     <div class="car-body">
       <h3>${car.name}</h3>
       <div class="car-meta">
@@ -36,7 +83,10 @@ function createCard(car, preferMode) {
           <strong>${formatCfa(price)}</strong>
           <small>${unit}</small>
         </div>
-        <button class="btn btn-outline" data-open="${car.id}" type="button">Détails</button>
+        <div class="car-actions">
+          <a class="btn btn-gold" href="${waUrl}" target="_blank" rel="noopener">WhatsApp</a>
+          <button class="btn btn-outline" data-open="${car.id}" type="button">Détails</button>
+        </div>
       </div>
     </div>
   `;
@@ -69,9 +119,10 @@ function openModal(car) {
   const loc = car.priceDay ? `Location : ${formatCfa(car.priceDay)} / jour` : "Location : non disponible";
   const sale = car.priceSale ? `Vente : ${formatCfa(car.priceSale)}` : "Vente : sur demande";
   modal.querySelector("[data-m-price]").innerHTML = `<div>${loc}</div><div>${sale}</div>`;
-  const wa = document.querySelector(".wa-fab")?.getAttribute("href") || "#";
-  const msg = encodeURIComponent(`Bonjour KYA CARS, je suis intéressé par le ${car.name}.`);
-  modal.querySelector("[data-m-wa]").href = wa.includes("?") ? wa : `${wa}?text=${msg}`;
+  const prefer = modal.dataset.preferMode || "";
+  const waLink = modal.querySelector("[data-m-wa]");
+  waLink.href = carWhatsAppUrl(car, prefer);
+  waLink.textContent = "Continuer sur WhatsApp";
   modal.classList.add("show");
   document.body.style.overflow = "hidden";
 }
@@ -96,6 +147,8 @@ function renderFleet(target, options) {
   el.querySelectorAll("[data-open]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const car = VEHICLES.find((c) => String(c.id) === btn.dataset.open);
+      const modal = document.getElementById("car-modal");
+      if (modal) modal.dataset.preferMode = options.mode || "";
       if (car) openModal(car);
     });
   });
@@ -111,6 +164,10 @@ function fillSelect(select, values, selected) {
     if (selected && selected === value) opt.selected = true;
     select.appendChild(opt);
   });
+}
+
+if (typeof VEHICLES === "undefined") {
+  window.VEHICLES = [];
 }
 
 document.addEventListener("gesturestart", (e) => e.preventDefault());

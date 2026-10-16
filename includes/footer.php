@@ -12,6 +12,7 @@
         <li><a href="services.php">Nos services</a></li>
         <li><a href="flotte.php">Notre flotte</a></li>
         <li><a href="vendre.php">Vendre un véhicule</a></li>
+        <li><a href="login.php">Connexion</a></li>
       </ul>
     </div>
     <div>
@@ -49,7 +50,7 @@
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 13h18l-1.5-5.5A2 2 0 0 0 17.6 6H6.4a2 2 0 0 0-1.9 1.5L3 13Z"/><path d="M5 17a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm14 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/><path d="M3 13v4h2.5m13 0H21v-4"/></svg>
     <span>Flotte</span>
   </a>
-  <a class="tab-wa" href="https://wa.me/<?= KYA_WHATSAPP ?>" target="_blank" rel="noopener">
+  <a class="tab-wa" href="https://wa.me/<?= KYA_WHATSAPP ?>?text=<?= urlencode("Bonjour KYA CARS 👋\n\nJe vous contacte depuis le site.\nJe souhaite des informations sur la location ou la vente d'un véhicule.\n\nMerci.") ?>" target="_blank" rel="noopener">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.04 0C5.5 0 .16 5.33.16 11.86c0 2.09.55 4.13 1.6 5.93L0 24l6.37-1.67a11.84 11.84 0 0 0 5.66 1.44h.01c6.54 0 11.87-5.33 11.87-11.86 0-3.17-1.23-6.15-3.39-8.43Zm-8.48 18.24h-.01a9.86 9.86 0 0 1-5.02-1.37l-.36-.21-3.78.99 1.01-3.68-.24-.38a9.84 9.84 0 0 1-1.51-5.25c0-5.44 4.43-9.86 9.88-9.86 2.64 0 5.11 1.03 6.97 2.9a9.8 9.8 0 0 1 2.9 6.97c0 5.44-4.44 9.89-9.84 9.89Z"/></svg>
     <span>WhatsApp</span>
   </a>
@@ -63,7 +64,7 @@
   </a>
 </nav>
 
-<a class="wa-fab" href="https://wa.me/<?= KYA_WHATSAPP ?>" target="_blank" rel="noopener" aria-label="WhatsApp">
+<a class="wa-fab" href="https://wa.me/<?= KYA_WHATSAPP ?>?text=<?= urlencode("Bonjour KYA CARS 👋\n\nJe vous contacte depuis le site.\nJe souhaite des informations sur la location ou la vente d'un véhicule.\n\nMerci.") ?>" target="_blank" rel="noopener" aria-label="WhatsApp">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M20.52 3.48A11.86 11.86 0 0 0 12.04 0C5.5 0 .16 5.33.16 11.86c0 2.09.55 4.13 1.6 5.93L0 24l6.37-1.67a11.84 11.84 0 0 0 5.66 1.44h.01c6.54 0 11.87-5.33 11.87-11.86 0-3.17-1.23-6.15-3.39-8.43Zm-8.48 18.24h-.01a9.86 9.86 0 0 1-5.02-1.37l-.36-.21-3.78.99 1.01-3.68-.24-.38a9.84 9.84 0 0 1-1.51-5.25c0-5.44 4.43-9.86 9.88-9.86 2.64 0 5.11 1.03 6.97 2.9a9.8 9.8 0 0 1 2.9 6.97c0 5.44-4.44 9.89-9.84 9.89Zm5.4-7.39c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.04-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35Z"/>
   </svg>
@@ -80,14 +81,50 @@
       <div data-m-price class="gold-text" style="font-family:var(--font-display);font-size:1.05rem;line-height:1.7"></div>
       <p style="color:var(--muted);margin:18px 0">Disponible à Dakar. Assurance, assistance et livraison possibles sur demande.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
-        <a class="btn btn-gold" data-m-wa href="https://wa.me/<?= KYA_WHATSAPP ?>" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn btn-gold" data-m-wa href="https://wa.me/<?= KYA_WHATSAPP ?>" target="_blank" rel="noopener">Continuer sur WhatsApp</a>
         <a class="btn btn-outline" href="contact.php">Nous contacter</a>
       </div>
     </div>
   </div>
 </div>
 
-<script src="js/vehicles.js?v=2"></script>
-<script src="js/main.js?v=2"></script>
+<div id="kya-chatbot" class="kya-chatbot">
+  <div class="cb-panel" role="dialog" aria-label="Assistant KYA CARS">
+    <div class="cb-head">
+      <div>
+        <strong>Assistant KYA</strong>
+        <span>Questions sur le site</span>
+      </div>
+      <button type="button" class="cb-close" aria-label="Fermer">×</button>
+    </div>
+    <div class="cb-log"></div>
+    <div class="cb-chips">
+      <button type="button" data-chip="Quels sont vos horaires ?">Horaires</button>
+      <button type="button" data-chip="Comment louer une voiture ?">Location</button>
+      <button type="button" data-chip="Je veux acheter un véhicule">Achat</button>
+      <button type="button" data-chip="Où se trouve l'agence ?">Adresse</button>
+    </div>
+    <form class="cb-form">
+      <input class="cb-input" type="text" placeholder="Votre question…" autocomplete="off">
+      <button class="btn btn-gold" type="submit">OK</button>
+    </form>
+  </div>
+  <button type="button" class="cb-toggle" aria-label="Ouvrir l'assistant">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 6h14v9H8l-3 3V6Z"/></svg>
+  </button>
+</div>
+
+<script>
+window.KYA = {
+  phone: <?= json_encode(KYA_PHONE) ?>,
+  whatsapp: <?= json_encode(KYA_WHATSAPP) ?>,
+  email: <?= json_encode(KYA_EMAIL) ?>,
+  address: <?= json_encode(KYA_ADDRESS) ?>,
+  hours: <?= json_encode(KYA_HOURS) ?>
+};
+</script>
+<script src="js/vehicles.php"></script>
+<script src="js/main.js?v=4"></script>
+<script src="js/chatbot.js?v=1"></script>
 </body>
 </html>
